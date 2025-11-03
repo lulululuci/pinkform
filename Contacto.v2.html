@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario</title>
+    
+    <!--aca va el bootstrap-->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+
+    <!--aca va el recaptcha-->
+    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
+    
+</head>
+
+<body>
+    <!-- Formulario de contacto -->
+    <div class="container mt-5">
+        <form id="contactForm">
+            <!-- Campo de nombre -->
+            <div class="mb-3">
+                <label for="name" class="form-label">Nombre</label>
+                <input type="text" class="form-control" id="name" required>
+            </div>
+
+            <!-- Campo de Email -->
+            <div class="mb-3">
+                <label for="email" class="form-label">Correo Electrónico</label>
+                <input type="email" class="form-control" id="email" required>
+            </div>
+
+            <!-- Campo de asunto -->
+            <div class="mb-3">
+                <label for="subject" class="form-label">Asunto</label>
+                <input type="text" class="form-control" id="subject" required>
+            </div>
+
+            <!-- Campo de mensaje -->
+            <div class="mb-3">
+                <label for="message" class="form-label">Mensaje</label>
+                <textarea class="form-control" id="message" rows="4" required></textarea>
+            </div>
+
+            <!-- reCaptcha -->
+            <div class="mb-3">
+                <div class="g-recaptcha" data-sitekey="6LfLQwEsAAAAADCCjeotqG_obecgQlY3fVzgSZ0Z"></div>
+            </div>
+
+            <!-- Callback de reCaptcha -->
+
+            <script type="text/javascript">
+            var onloadCallback = function() {
+                alert("grecaptcha is ready!");
+            };
+            </script>
+
+            <!-- Botón de envío -->
+            <button type="submit" class="btn btn-primary " value="Submit">Enviar</button>
+
+        </form>
+    </div>
+
+    <!-- Script del formulario -->
+    <script src="formulario.js"></script>
+    
+</body>
+</html>
