@@ -9,5 +9,5 @@ form.addEventListener('submit', e => {
   fetch(scriptURL, { method: 'POST', body: new FormData(form)})
   .then(response => alert("¡Gracias! ¡¡Este formulario fue enviado!!" ))
   .then(() => { window.location.reload(); })
-  .catch(error => console.error('Error!', error.message))
+  .catch(error => console.error('Error: ' + error.message))
 })
