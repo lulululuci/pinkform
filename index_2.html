@@ -20,14 +20,13 @@
 </script>
 
     <!--aca va la inicializacion del emailjs-->
-    <!--
     <script type="text/javascript">
         (function(){
             emailjs.init({
             publicKey: "pIz6BavMH5IcnMoL7",
             });
         })();
-    </script>-->
+    </script>
 
 </head>
 
@@ -96,7 +95,7 @@ form.addEventListener('submit', e => {
   .catch(error => console.error('Error!', error.message))
 
     // Enviar con EmailJS
-  emailjs.sendForm('TU_SERVICE_ID', 'TU_TEMPLATE_ID', form)
+  emailjs.sendForm('service_marxform', 'template_marxform', form)
     .then(() => {
       alert("¡Formulario enviado correctamente!");
       window.location.reload();
