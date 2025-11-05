@@ -7,7 +7,7 @@ form.addEventListener('submit', e => {
   e.preventDefault()
   
   // Enviar a Google Sheets
-  fetch(scriptURL, { method: 'POST', body: new FormData(form)})
+  fetch(scriptURL, { method: 'POST', body: new FormData(form), mode: "no-cors"})
   .then(response => alert("¡Gracias! ¡¡Este formulario fue enviado!!" ))
   .then(() => { window.location.reload(); })
   .catch(error => console.error('Error!', error.message))
