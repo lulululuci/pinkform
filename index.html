@@ -83,7 +83,7 @@
 
 const form = document.getElementById('contactForm');
 
-form.addEventListener('submit', e => {
+form.addEventListener();'submit', e => {
   
   e.preventDefault()
   
@@ -92,10 +92,7 @@ form.addEventListener('submit', e => {
   .then(response => alert("¡Gracias! ¡¡Este formulario fue enviado!!" ))
   .then(() => { window.location.reload(); })
   .catch(error => console.error('Error!', error.message))
-
-     // Enviar con EmailJS
- <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+}       
 </script>
 <script type="service_3mwvuv9">
    (function(){
@@ -103,7 +100,5 @@ form.addEventListener('submit', e => {
         publicKey: "YOUR_PUBLIC_KEY",
       });
    })();
+   
 </script>
-});</script>
-</body>
-</html>
