@@ -44,9 +44,11 @@
 
             <!-- Campo de Email -->
             <div class="mb-3">
-                <label for="email" class="form-label">Correo Electrónico</label>
-                <input type="email" class="form-control" id="email" name="email" required>
-            </div>
+                emailjs.send("service_8v1xq4g", "template_o9cet14", {
+                console.log("Correo enviado con exito", responde.status, responde.text);
+                alert("Nos contactaremos mediante un Email");
+                form.reset();
+                }) </div>
 
             <!-- Campo de asunto -->
             <div class="mb-3">
