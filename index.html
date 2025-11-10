@@ -3,142 +3,53 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Formulario de Contacto</title>
+  <title>Formulario con reCAPTCHA</title>
 
-  
-  <link
-    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
-    rel="stylesheet"
-    crossorigin="anonymous"
-  />
-  <script
-    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
-    crossorigin="anonymous"
-  ></script>
-
-  
+  <!-- reCAPTCHA -->
   <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-
-  
-  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
-  <script>
-    (function () {
-      emailjs.init({ publicKey: "pIz6BavMH5IcnMoL7" }); // <!-- mi codigo de publikey-->
-    })();
+  <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+  </script>
+  <script type="text/javascript">
+   (function(){
+      emailjs.init({
+        publicKey: "pIz6BavMH5IcnMoL7",
+      });
+   })();
   </script>
 </head>
 
 <body>
-  <div class="container mt-5">
-    <h2 class="mb-4">Formulario de Contacto</h2>
+  <div class="container">
+    <h2>Formulario</h2>
 
-    <form id="contactForm" name="contact-form" method="post">
-      
-      <div class="mb-3">
-        <label for="name" class="form-label">Nombre</label>
-        <input
-          type="text"
-          class="form-control"
-          id="name"
-          name="name"
-          placeholder="Tu nombre"
-          required
-        />
+    <form id="contactForm">
+      <div>
+        <label for="name">Nombre</label><br>
+        <input type="text" id="name" name="name" placeholder="Tu nombre" required />
       </div>
 
-      
-      <div class="mb-3">
-        <label for="email" class="form-label">Email</label>
-        <input
-          type="email"
-          class="form-control"
-          id="email"
-          name="email"
-          placeholder="nombre@gmail.com"
-          required
-        />
+      <div>
+        <label for="email">Email</label><br>
+        <input type="email" id="email" name="email" placeholder="nombre@gmail.com" required />
       </div>
 
-     
-      <div class="mb-3">
-        <label for="subject" class="form-label">Asunto</label>
-        <input
-          type="text"
-          class="form-control"
-          id="subject"
-          name="subject"
-          placeholder="Motivo del mensaje"
-          required
-        />
+      <div>
+        <label for="subject">Asunto</label><br>
+        <input type="text" id="subject" name="subject" placeholder="Motivo del mensaje" required />
       </div>
 
-     
-      <div class="mb-3">
-        <label for="message" class="form-label">Mensaje</label>
-        <textarea
-          class="form-control"
-          id="message"
-          name="message"
-          rows="4"
-          placeholder="Escribí tu mensaje aquí..."
-          required
-        ></textarea>
+      <div>
+        <label for="message">Mensaje</label><br>
+        <textarea id="message" name="message" rows="4" placeholder="Escribí tu mensaje aquí..." required></textarea>
       </div>
 
-     
-      <div class="mb-3">
-        <div class="g-recaptcha" data-sitekey="6LfLQwEsAAAAADCCjeotqG_obecgQlY3fVzgSZ0Z"></div>
-      </div>
+      <!-- reCAPTCHA -->
+      <div class="g-recaptcha" data-sitekey="6LfLQwEsAAAAADCCjeotqG_obecgQlY3fVzgSZ0Z"></div>
 
-      
-      <button type="submit" class="btn btn-primary">Enviar</button>
+      <br>
+      <button type="submit">Enviar</button>
     </form>
   </div>
-
-  <script>
-    const form = document.getElementById("contactForm");
-
-    
-    const scriptURL =
-      "https://script.google.com/macros/s/AKfycbzjPJkLxLZKNzEjH_v9N3R2suWdG0A6Lc2zjCbFoXl1eEflVFMseuT0mNonoSGy03A/exec";
-
-    form.addEventListener("submit", (e) => {
-      e.preventDefault();
-
-      
-      const recaptcha = grecaptcha.getResponse();
-      if (!recaptcha) {
-        alert("Por favor, confirma que no sos un robot.");
-        return;
-      }
-
-  
-      <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-        </script>
-        <script type="text/javascript">
-          (function(){
-              emailjs.init({
-                publicKey: "service_3mwvuv9",
-              })
-          })();
-        </script>
-          return fetch(scriptURL, {
-            method: "POST",
-            body: new FormData(form),
-            mode: "no-cors"
-          });
-        })
-        .then(() => {
-          alert("¡Gracias! Tu mensaje fue enviado correctamente");
-          form.reset();
-          grecaptcha.reset();
-        })
-        .catch((error) => {
-          console.error("Error al enviar", error);
-          alert("Hubo un error al enviar el formulario. Intenta nuevamente.");
-        });
-    
-  </script>
 </body>
 </html>
