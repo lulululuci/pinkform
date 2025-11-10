@@ -53,6 +53,9 @@
   </div>
    <script>
      const form = document.getElementById("contactForm");
+     form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
      emailjs.send("service_8v1xq4g", "template_o9cet14", {
           from_name: form.name.value,
           from_email: form.email.value,
@@ -61,6 +64,7 @@
         })
         .then((response) => {
           console.log("Correo enviado con éxito", response.status, response.text);
+           });
           </script>
 </body>
 </html>
