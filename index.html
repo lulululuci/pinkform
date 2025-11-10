@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Formulario</title>
+  <title>Formulario de Contacto</title>
 
   <!-- Bootstrap -->
   <link
@@ -23,47 +23,69 @@
   <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
   <script>
     (function () {
-      emailjs.init({ publicKey: "pIz6BavMH5IcnMoL7" });
+      emailjs.init({ publicKey: "pIz6BavMH5IcnMoL7" }); // <!-- mi codigo de publikey-->
     })();
   </script>
 </head>
 
 <body>
   <div class="container mt-5">
+    <h2 class="mb-4">Formulario de Contacto</h2>
+
     <form id="contactForm" name="contact-form" method="post">
-      <!-- Campo de nombre -->
+      <!-- Nombre -->
       <div class="mb-3">
         <label for="name" class="form-label">Nombre</label>
-        <input type="text" class="form-control" id="name" name="name" required />
+        <input
+          type="text"
+          class="form-control"
+          id="name"
+          name="name"
+          placeholder="Tu nombre"
+          required
+        />
       </div>
 
-      <!-- Campo de email -->
-     <!-- Campo de email -->
-<div class="mb-3">
-  <label for="email" class="form-label">Email</label>
-  <input
-    type="email"
-    class="form-control"
-    id="email"
-    name="email"
-    placeholder="nombre@gmail.com"
-    required
-  />
-</div>
+      <!-- Email -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Email</label>
+        <input
+          type="email"
+          class="form-control"
+          id="email"
+          name="email"
+          placeholder="nombre@gmail.com"
+          required
+        />
+      </div>
 
-      <!-- Campo de asunto -->
+      <!-- Asunto -->
       <div class="mb-3">
         <label for="subject" class="form-label">Asunto</label>
-        <input type="text" class="form-control" id="subject" name="subject" required />
+        <input
+          type="text"
+          class="form-control"
+          id="subject"
+          name="subject"
+          placeholder="Motivo del mensaje"
+          required
+        />
       </div>
 
-      <!-- Campo de mensaje -->
+      <!-- Mensaje -->
       <div class="mb-3">
         <label for="message" class="form-label">Mensaje</label>
-        <textarea class="form-control" id="message" rows="4" name="message" required></textarea>
+        <textarea
+          class="form-control"
+          id="message"
+          name="message"
+          rows="4"
+          placeholder="Escribí tu mensaje aquí..."
+          required
+        ></textarea>
       </div>
 
-      <!-- reCaptcha -->
+      <!-- reCAPTCHA -->
       <div class="mb-3">
         <div class="g-recaptcha" data-sitekey="6LfLQwEsAAAAADCCjeotqG_obecgQlY3fVzgSZ0Z"></div>
       </div>
@@ -73,40 +95,47 @@
     </form>
   </div>
 
-  <!-- Envío de datos -->
   <script>
     const form = document.getElementById("contactForm");
+
+    // Tu script de Google Sheets
     const scriptURL =
       "https://script.google.com/macros/s/AKfycbzjPJkLxLZKNzEjH_v9N3R2suWdG0A6Lc2zjCbFoXl1eEflVFMseuT0mNonoSGy03A/exec";
 
     form.addEventListener("submit", (e) => {
       e.preventDefault();
 
-      // Enviar con EmailJS
+      // Verificamos el reCAPTCHA
+      const recaptcha = grecaptcha.getResponse();
+      if (!recaptcha) {
+        alert("Por favor, confirma que no sos un robot.");
+        return;
+      }
+
+      // Enviar correo con EmailJS
       emailjs
         .send("service_8v1xq4g", "template_o9cet14", {
-          name: form.name.value,
-          email: form.email.value,
+          from_name: form.name.value,
+          from_email: form.email.value,
           subject: form.subject.value,
           message: form.message.value,
-          reply_to: form.email.value,
         })
         .then((response) => {
-          console.log("Correo enviado con éxito:", response.status, response.text);
+          console.log("✅ Correo enviado con éxito:", response.status, response.text);
 
-          // También enviar a Google Sheets
+          // También enviar a Google Sheets (opcional)
           return fetch(scriptURL, {
             method: "POST",
             body: new FormData(form),
           });
         })
         .then(() => {
-          alert("¡Gracias! ¡Tu formulario fue enviado con éxito!");
+          alert("¡Gracias! Tu mensaje fue enviado correctamente 🎉");
           form.reset();
           grecaptcha.reset();
         })
         .catch((error) => {
-          console.error("Error al enviar:", error);
+          console.error("❌ Error al enviar:", error);
           alert("Hubo un error al enviar el formulario. Intenta nuevamente.");
         });
     });
