@@ -113,17 +113,16 @@
       }
 
   
-      emailjs
-        .send("service_8v1xq4g", "template_o9cet14", {
-          from_name: form.name.value,
-          from_email: form.email.value,
-          subject: form.subject.value,
-          message: form.message.value,
-        })
-        .then((response) => {
-          console.log("Correo enviado con éxito", response.status, response.text);
-
-        
+      <script type="text/javascript"
+        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
+        </script>
+        <script type="text/javascript">
+          (function(){
+              emailjs.init({
+                publicKey: "service_3mwvuv9",
+              })
+          })();
+        </script>
           return fetch(scriptURL, {
             method: "POST",
             body: new FormData(form),
@@ -139,7 +138,7 @@
           console.error("Error al enviar", error);
           alert("Hubo un error al enviar el formulario. Intenta nuevamente.");
         });
-    });
+    
   </script>
 </body>
 </html>
