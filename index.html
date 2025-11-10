@@ -43,26 +43,29 @@
             </div>
 
             <!-- Campo de Email -->
-            <script>
-  const form = document.getElementById("contact-form");
+         <script>
+  document.addEventListener("DOMContentLoaded", () => {
+    const form = document.getElementById("contact-form");
 
-  form.addEventListener("submit", function (event) {
-    event.preventDefault(); // Evita el envío tradicional del formulario
+    form.addEventListener("submit", (event) => {
+      event.preventDefault(); // Evita el envío tradicional del formulario
 
-    emailjs.send("service_8v1xq4g", "template_o9cet14", {
-      name: form.name.value,
-      subject: form.subject.value,
-      message: form.message.value,
-      reply_to: form.email.value
-    })
-    .then((response) => {
-      console.log("Correo enviado con éxito", response.status, response.text);
-    })
-    .catch((error) => {
-      console.error("Error al enviar correo:", error);
+      emailjs.send("service_8v1xq4g", "template_o9cet14", {
+        name: form.name.value,
+        subject: form.subject.value,
+        message: form.message.value,
+        reply_to: form.email.value
+      })
+      .then((response) => {
+        console.log("Correo enviado con éxito:", response.status, response.text);
+      })
+      .catch((error) => {
+        console.error("Error al enviar correo:", error);
+      });
     });
   });
 </script>
+
               
             <!-- Campo de asunto -->
             <div class="mb-3">
