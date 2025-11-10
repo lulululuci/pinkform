@@ -1,116 +1,107 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulario</title>
-    
-    <!--aca va el bootstrap-->
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Formulario</title>
 
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
+  <!-- Bootstrap -->
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+    crossorigin="anonymous"
+  />
+  <script
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js"
+    crossorigin="anonymous"
+  ></script>
 
-    <!--aca va el recaptcha-->
-    <script src="https://www.google.com/recaptcha/api.js" async defer></script>
-     <script type="module" src="https://cdnjs.cloudflare.com/ajax/libs/fetch/3.6.2/fetch.min.js"></script>
+  <!-- reCAPTCHA -->
+  <script src="https://www.google.com/recaptcha/api.js" async defer></script>
 
-    <!--aca va el mensaje automatico-->
-    
-    <script type="text/javascript"
-        src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
-</script>
-
-    <!--aca va la inicializacion del emailjs-->
-    
-    <script type="text/javascript">
-        (function(){
-            emailjs.init({
-            publicKey: "pIz6BavMH5IcnMoL7",
-            });
-        })();
-    </script>
-
+  <!-- EmailJS -->
+  <script src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js"></script>
+  <script>
+    (function () {
+      emailjs.init({ publicKey: "pIz6BavMH5IcnMoL7" });
+    })();
+  </script>
 </head>
 
 <body>
-    <!-- Formulario de contacto -->
-    <div class="container mt-5">
-        <form id="contactForm" name="contact-form" method="post">
-            <!-- Campo de nombre -->
-            <div class="mb-3">
-                <label for="name" class="form-label">Nombre</label>
-                <input type="text" class="form-control" id="name" name="name" required>
-            </div>
+  <div class="container mt-5">
+    <form id="contactForm" name="contact-form" method="post">
+      <!-- Campo de nombre -->
+      <div class="mb-3">
+        <label for="name" class="form-label">Nombre</label>
+        <input type="text" class="form-control" id="name" name="name" required />
+      </div>
 
-            <!-- Campo de Email -->
-         <script>
-  document.addEventListener("DOMContentLoaded", () => {
-    const form = document.getElementById("contact-form");
+      <!-- Campo de email -->
+      <div class="mb-3">
+        <label for="email" class="form-label">Correo electrónico</label>
+        <input type="email" class="form-control" id="email" name="email" required />
+      </div>
 
-    form.addEventListener("submit", (event) => {
-      event.preventDefault(); // Evita el envío tradicional del formulario
+      <!-- Campo de asunto -->
+      <div class="mb-3">
+        <label for="subject" class="form-label">Asunto</label>
+        <input type="text" class="form-control" id="subject" name="subject" required />
+      </div>
 
-      emailjs.send("service_8v1xq4g", "template_o9cet14", {
-        name: form.name.value,
-        subject: form.subject.value,
-        message: form.message.value,
-        reply_to: form.email.value
-      })
-      .then((response) => {
-        console.log("Correo enviado con éxito:", response.status, response.text);
-      })
-      .catch((error) => {
-        console.error("Error al enviar correo:", error);
-      });
+      <!-- Campo de mensaje -->
+      <div class="mb-3">
+        <label for="message" class="form-label">Mensaje</label>
+        <textarea class="form-control" id="message" rows="4" name="message" required></textarea>
+      </div>
+
+      <!-- reCaptcha -->
+      <div class="mb-3">
+        <div class="g-recaptcha" data-sitekey="6LfLQwEsAAAAADCCjeotqG_obecgQlY3fVzgSZ0Z"></div>
+      </div>
+
+      <!-- Botón -->
+      <button type="submit" class="btn btn-primary">Enviar</button>
+    </form>
+  </div>
+
+  <!-- Envío de datos -->
+  <script>
+    const form = document.getElementById("contactForm");
+    const scriptURL =
+      "https://script.google.com/macros/s/AKfycbzjPJkLxLZKNzEjH_v9N3R2suWdG0A6Lc2zjCbFoXl1eEflVFMseuT0mNonoSGy03A/exec";
+
+    form.addEventListener("submit", (e) => {
+      e.preventDefault();
+
+      // Enviar con EmailJS
+      emailjs
+        .send("service_8v1xq4g", "template_o9cet14", {
+          name: form.name.value,
+          email: form.email.value,
+          subject: form.subject.value,
+          message: form.message.value,
+          reply_to: form.email.value,
+        })
+        .then((response) => {
+          console.log("Correo enviado con éxito:", response.status, response.text);
+
+          // También enviar a Google Sheets
+          return fetch(scriptURL, {
+            method: "POST",
+            body: new FormData(form),
+          });
+        })
+        .then(() => {
+          alert("¡Gracias! ¡Tu formulario fue enviado con éxito!");
+          form.reset();
+          grecaptcha.reset();
+        })
+        .catch((error) => {
+          console.error("Error al enviar:", error);
+          alert("Hubo un error al enviar el formulario. Intenta nuevamente.");
+        });
     });
-  });
-</script>
-
-              
-            <!-- Campo de asunto -->
-            <div class="mb-3">
-                <label for="subject" class="form-label">Asunto</label>
-                <input type="text" class="form-control" id="subject" name="subject" required>
-            </div>
-
-            <!-- Campo de mensaje -->
-            <div class="mb-3">
-                <label for="message" class="form-label">Mensaje</label>
-                <textarea class="form-control" id="message" rows="4" name="message" required></textarea>
-            </div>
-
-            <!-- reCaptcha -->
-            <div class="mb-3">
-                <div class="g-recaptcha" data-sitekey="6LfLQwEsAAAAADCCjeotqG_obecgQlY3fVzgSZ0Z"></div>
-            </div>
-
-            <!-- Callback de reCaptcha -->
-
-            <script type="text/javascript">
-            var onloadCallback = function() {
-                alert("grecaptcha is ready!");
-            };
-            </script>
-
-            <!-- Botón de envío -->
-            <button type="submit" class="btn btn-primary " >Enviar</button>
-
-        </form>
-    </div>
-    <script>
-    <!-- Script del formulario y el Google Sheets -->
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzjPJkLxLZKNzEjH_v9N3R2suWdG0A6Lc2zjCbFoXl1eEflVFMseuT0mNonoSGy03A/exec'
-
-const form = document.getElementById('contactForm');
-
-form.addEventListener('submit', (e) => {
-  e.preventDefault();
-  
-  // Enviar a Google Sheets
-  fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-  .then(response => alert("¡Gracias! ¡¡Este formulario fue enviado!!" ))
-  .then(() => { window.location.reload(); })
-  .catch(error => console.error('Error!', error.message))
-}   </script>
-    </body>
+  </script>
+</body>
 </html>
