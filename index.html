@@ -42,17 +42,22 @@
                 <input type="text" class="form-control" id="name" name="name" required>
             </div>
 
-            <!-- Campo de Email -->
-            <div class="mb-3">
-
-                emailjs.send("service_8v1xq4g", "template_o9cet14", {
+            <!-- Campo de Email --><script>
+             emailjs.send("service_8v1xq4g", "template_o9cet14", {
                 name: form.name.value,
                 subject: form.subject.value,
                 message: form.message.value,
-                reply_to: form.email.value
-                })
-.then(() => console.log("Correo enviado con éxito"))
-.catch(err => console.error("Error al enviar el correo:", err));
+                reply_to: form.email ? form.email.value : ''
+              })
+              .then((response) => {
+                console.log("Correo enviado con éxito", response.status, response.text);
+              })
+              .catch((error) => {
+                console.error("Error al enviar correo:", error);
+              });
+            });
+                            </script>
+                
 
             <!-- Campo de asunto -->
             <div class="mb-3">
