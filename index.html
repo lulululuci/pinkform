@@ -52,8 +52,8 @@
     </form>
   </div>
    <script>
-  emailjs
-        .send("service_8v1xq4g", "template_o9cet14", {
+     const form = document.getElementById("contactForm");
+     emailjs.send("service_8v1xq4g", "template_o9cet14", {
           from_name: form.name.value,
           from_email: form.email.value,
           subject: form.subject.value,
