@@ -44,11 +44,15 @@
 
             <!-- Campo de Email -->
             <div class="mb-3">
+
                 emailjs.send("service_8v1xq4g", "template_o9cet14", {
-                console.log("Correo enviado con exito", responde.status, responde.text);
-                alert("Nos contactaremos mediante un Email");
-                form.reset();
-                }) </div>
+                name: form.name.value,
+                subject: form.subject.value,
+                message: form.message.value,
+                reply_to: form.email.value
+                })
+.then(() => console.log("Correo enviado con éxito"))
+.catch(err => console.error("Error al enviar el correo:", err));
 
             <!-- Campo de asunto -->
             <div class="mb-3">
@@ -86,12 +90,11 @@
 
 const form = document.getElementById('contactForm');
 
-form.addEventListener('submit', function (e) => {
-  
+form.addEventListener('submit', (e) => {
   e.preventDefault();
   
   // Enviar a Google Sheets
-  fetch(scriptURL, { method: 'POST', body: new FormData(form), mode: "no-cors"})
+  fetch(scriptURL, { method: 'POST', body: new FormData(form)})
   .then(response => alert("¡Gracias! ¡¡Este formulario fue enviado!!" ))
   .then(() => { window.location.reload(); })
   .catch(error => console.error('Error!', error.message))
