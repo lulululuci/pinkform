@@ -62,10 +62,13 @@
             publicKey: "pIz6BavMH5IcnMoL7",
             });
         })();
+            .then(() => {
+            alert("¡Formulario enviado correctamente!");
+            window.location.reload();
+            }, (error) => {
+            alert("Error al enviar el correo: " + error);
+            });
+    });
     </script>
-        .then((response) => {
-          console.log("Correo enviado con éxito", response.status, response.text);
-           });
-          </script>
 </body>
 </html>
