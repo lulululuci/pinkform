@@ -10,13 +10,6 @@
   <script type="text/javascript"
         src="https://cdn.jsdelivr.net/npm/@emailjs/browser@4/dist/email.min.js">
   </script>
-  <script type="text/javascript">
-   (function(){
-      emailjs.init({
-        publicKey: "pIz6BavMH5IcnMoL7",
-      });
-   })();
-  </script>
 </head>
 
 <body>
@@ -51,7 +44,7 @@
       <button type="submit">Enviar</button>
     </form>
   </div>
-   <script>
+  <script>
      const form = document.getElementById("contactForm");
      form.addEventListener("submit", (e) => {
       e.preventDefault();
@@ -62,6 +55,14 @@
           subject: form.subject.value,
           message: form.message.value,
         })
+
+     <script type="text/javascript">
+        (function(){
+            emailjs.init({
+            publicKey: "pIz6BavMH5IcnMoL7",
+            });
+        })();
+    </script>
         .then((response) => {
           console.log("Correo enviado con éxito", response.status, response.text);
            });
